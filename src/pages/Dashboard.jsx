@@ -14,8 +14,8 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
-        <p className="text-sm text-gray-500 mt-1">Overview of your restaurant today</p>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Dashboard</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Overview of your restaurant today</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -27,40 +27,47 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5">
           <div className="flex items-center gap-2 mb-4">
             <Clock size={18} className="text-gray-400" />
-            <h3 className="font-semibold text-gray-700">Recent Orders</h3>
+            <h3 className="font-semibold text-gray-700 dark:text-gray-200">Recent Orders</h3>
           </div>
-          <div className="space-y-3">
-            {orders.slice(0, 5).map((order) => (
-              <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <p className="font-medium text-sm">{order.id}</p>
-                  <p className="text-xs text-gray-500">Table {order.table} · {order.time}</p>
+          {orders.length === 0 ? (
+            <div className="text-center py-8">
+              <ShoppingBag size={32} className="mx-auto text-gray-300 dark:text-gray-600 mb-2" />
+              <p className="text-sm text-gray-400">No orders yet today</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {orders.slice(0, 5).map((order) => (
+                <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                  <div>
+                    <p className="font-medium text-sm dark:text-gray-200">{order.id}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Table {order.table} · {order.time}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-semibold dark:text-gray-200">
+                      ₹{order.items.reduce((s, i) => s + i.price * i.qty, 0)}
+                    </span>
+                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                      order.status === 'new' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' :
+                      order.status === 'preparing' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300' :
+                      'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300'
+                    }`}>
+                      {order.status}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm font-semibold">
-                    ₹{order.items.reduce((s, i) => s + i.price * i.qty, 0)}
-                  </span>
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                    order.status === 'new' ? 'bg-blue-100 text-blue-700' :
-                    order.status === 'preparing' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-green-100 text-green-700'
-                  }`}>
-                    {order.status}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Popular Items */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp size={18} className="text-gray-400" />
-            <h3 className="font-semibold text-gray-700">Popular Items Today</h3>
+            <h3 className="font-semibold text-gray-700 dark:text-gray-200">Popular Items Today</h3>
           </div>
           <div className="space-y-3">
             {[
@@ -70,17 +77,17 @@ export default function Dashboard() {
               { name: 'Masala Dosa', orders: 4, revenue: 480 },
               { name: 'Mango Lassi', orders: 4, revenue: 360 },
             ].map((item, i) => (
-              <div key={item.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div key={item.name} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xs font-bold">
+                  <span className="w-6 h-6 bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center text-xs font-bold">
                     {i + 1}
                   </span>
                   <div>
-                    <p className="font-medium text-sm">{item.name}</p>
-                    <p className="text-xs text-gray-500">{item.orders} orders</p>
+                    <p className="font-medium text-sm dark:text-gray-200">{item.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{item.orders} orders</p>
                   </div>
                 </div>
-                <span className="text-sm font-semibold text-gray-700">₹{item.revenue}</span>
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">₹{item.revenue}</span>
               </div>
             ))}
           </div>

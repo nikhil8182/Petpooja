@@ -9,9 +9,9 @@ import NewOrder from './pages/NewOrder'
 
 function App() {
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <Sidebar />
-      <main className="flex-1 p-6 overflow-auto">
+      <main className="flex-1 p-4 pt-16 lg:p-6 lg:pt-6 overflow-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/new-order" element={<NewOrder />} />
