@@ -4,49 +4,49 @@ overview: Build a full-featured PetPooja restaurant POS replica using React + Vi
 todos:
   - id: setup
     content: Initialize Vite + React project, install Tailwind CSS, Zustand, React Router, Recharts, Lucide React
-    status: pending
+    status: completed
   - id: mock-data
     content: "Create all mock data files: menu, orders, tables, staff, inventory, customers"
-    status: pending
+    status: completed
   - id: auth-store
     content: "Create Zustand stores: authStore, orderStore, cartStore"
-    status: pending
+    status: completed
   - id: layout
     content: Build Sidebar, Header, and main App layout with React Router routes
-    status: pending
+    status: completed
   - id: login
     content: Build Login page with demo credentials
-    status: pending
+    status: completed
   - id: dashboard
     content: Build Dashboard with revenue cards, charts, recent orders
-    status: pending
+    status: completed
   - id: pos
     content: "Build POS page: category tabs, item grid, cart panel, order types, invoice modal, KOT modal"
-    status: pending
+    status: completed
   - id: tables
     content: "Build Tables page: visual floor plan, table status, active order view"
-    status: pending
+    status: completed
   - id: orders
     content: "Build Orders page: order list, filters, status updates"
-    status: pending
+    status: completed
   - id: kot
     content: Build KOT (Kitchen Display) page
-    status: pending
+    status: completed
   - id: menu-mgmt
     content: Build Menu Management page with add/edit/delete
-    status: pending
+    status: completed
   - id: inventory
     content: Build Inventory page with stock levels and alerts
-    status: pending
+    status: completed
   - id: reports
     content: Build Reports page with charts
-    status: pending
+    status: completed
   - id: staff-customers
     content: Build Staff and Customers pages
-    status: pending
+    status: completed
   - id: settings
     content: Build Settings page
-    status: pending
+    status: completed
 isProject: false
 ---
 
