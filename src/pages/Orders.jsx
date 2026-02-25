@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { orders as initialOrders } from '../data/sampleData'
+import { useApp } from '../data/AppContext'
 
 const statusColors = {
   new: 'bg-blue-100 text-blue-700 border-blue-200',
@@ -7,21 +7,13 @@ const statusColors = {
   served: 'bg-green-100 text-green-700 border-green-200',
 }
 
-const statusFlow = { new: 'preparing', preparing: 'served', served: 'served' }
+const statusFlow = { new: 'preparing', preparing: 'served' }
 
 export default function Orders() {
-  const [orderList, setOrderList] = useState(initialOrders)
+  const { orders, updateOrderStatus } = useApp()
   const [filter, setFilter] = useState('all')
 
-  const filtered = filter === 'all' ? orderList : orderList.filter((o) => o.status === filter)
-
-  function advanceStatus(orderId) {
-    setOrderList((prev) =>
-      prev.map((o) =>
-        o.id === orderId ? { ...o, status: statusFlow[o.status] } : o
-      )
-    )
-  }
+  const filtered = filter === 'all' ? orders : orders.filter((o) => o.status === filter)
 
   return (
     <div className="space-y-6">
@@ -42,7 +34,7 @@ export default function Orders() {
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            {s} {s !== 'all' && `(${orderList.filter((o) => o.status === s).length})`}
+            {s} {s !== 'all' && `(${orders.filter((o) => o.status === s).length})`}
           </button>
         ))}
       </div>
@@ -78,7 +70,7 @@ export default function Orders() {
                 <span className="font-bold text-gray-800">₹{total}</span>
                 {order.status !== 'served' && (
                   <button
-                    onClick={() => advanceStatus(order.id)}
+                    onClick={() => updateOrderStatus(order.id, statusFlow[order.status])}
                     className="px-3 py-1.5 bg-orange-500 text-white text-xs font-medium rounded-lg hover:bg-orange-600 transition-colors"
                   >
                     {order.status === 'new' ? 'Start Preparing' : 'Mark Served'}

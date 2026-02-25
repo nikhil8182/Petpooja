@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, UtensilsCrossed, ClipboardList, Grid3X3, Receipt } from 'lucide-react'
+import { LayoutDashboard, UtensilsCrossed, ClipboardList, Grid3X3, Receipt, PlusCircle } from 'lucide-react'
 
 const links = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/new-order', icon: PlusCircle, label: 'New Order' },
   { to: '/menu', icon: UtensilsCrossed, label: 'Menu' },
   { to: '/orders', icon: ClipboardList, label: 'Orders' },
   { to: '/tables', icon: Grid3X3, label: 'Tables' },

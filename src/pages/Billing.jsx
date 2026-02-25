@@ -1,9 +1,21 @@
 import { useState } from 'react'
 import { Printer, Download } from 'lucide-react'
-import { orders } from '../data/sampleData'
+import { useApp } from '../data/AppContext'
 
 export default function Billing() {
+  const { orders } = useApp()
   const [selectedOrder, setSelectedOrder] = useState(orders[0])
+
+  if (!selectedOrder || orders.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Billing</h2>
+          <p className="text-sm text-gray-500 mt-1">No orders to bill yet</p>
+        </div>
+      </div>
+    )
+  }
 
   const subtotal = selectedOrder.items.reduce((s, i) => s + i.price * i.qty, 0)
   const gst = Math.round(subtotal * 0.05)

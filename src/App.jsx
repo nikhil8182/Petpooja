@@ -5,6 +5,7 @@ import Menu from './pages/Menu'
 import Orders from './pages/Orders'
 import Tables from './pages/Tables'
 import Billing from './pages/Billing'
+import NewOrder from './pages/NewOrder'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <main className="flex-1 p-6 overflow-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/new-order" element={<NewOrder />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/tables" element={<Tables />} />

@@ -1,12 +1,15 @@
 import { IndianRupee, ShoppingBag, Users, UtensilsCrossed, TrendingUp, Clock } from 'lucide-react'
 import StatCard from '../components/StatCard'
-import { orders } from '../data/sampleData'
+import { useApp } from '../data/AppContext'
 
 export default function Dashboard() {
+  const { orders, menu } = useApp()
+
   const totalRevenue = orders.reduce(
     (sum, o) => sum + o.items.reduce((s, i) => s + i.price * i.qty, 0),
     0
   )
+  const activeOrders = orders.filter((o) => o.status !== 'served').length
 
   return (
     <div className="space-y-6">
@@ -17,9 +20,9 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={IndianRupee} label="Today's Revenue" value={`₹${totalRevenue.toLocaleString()}`} sub="+12% from yesterday" />
-        <StatCard icon={ShoppingBag} label="Total Orders" value={orders.length} sub="3 active" color="text-blue-600" />
+        <StatCard icon={ShoppingBag} label="Total Orders" value={orders.length} sub={`${activeOrders} active`} color="text-blue-600" />
         <StatCard icon={Users} label="Guests Served" value="24" sub="Avg 2.4 per table" color="text-green-600" />
-        <StatCard icon={UtensilsCrossed} label="Menu Items" value="12" sub="2 unavailable" color="text-purple-600" />
+        <StatCard icon={UtensilsCrossed} label="Menu Items" value={menu.length} sub={`${menu.filter(m => !m.available).length} unavailable`} color="text-purple-600" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -30,7 +33,7 @@ export default function Dashboard() {
             <h3 className="font-semibold text-gray-700">Recent Orders</h3>
           </div>
           <div className="space-y-3">
-            {orders.map((order) => (
+            {orders.slice(0, 5).map((order) => (
               <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <p className="font-medium text-sm">{order.id}</p>
@@ -53,7 +56,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Quick Stats */}
+        {/* Popular Items */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp size={18} className="text-gray-400" />

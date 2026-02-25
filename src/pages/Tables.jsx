@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { tables as initialTables } from '../data/sampleData'
+import { useApp } from '../data/AppContext'
 
 const statusConfig = {
   available: { bg: 'bg-green-50 border-green-200', dot: 'bg-green-500', text: 'text-green-700' },
@@ -7,20 +6,15 @@ const statusConfig = {
   reserved: { bg: 'bg-yellow-50 border-yellow-200', dot: 'bg-yellow-500', text: 'text-yellow-700' },
 }
 
-export default function Tables() {
-  const [tableList, setTableList] = useState(initialTables)
+const statusFlow = { available: 'occupied', occupied: 'reserved', reserved: 'available' }
 
-  function cycleStatus(id) {
-    const flow = { available: 'occupied', occupied: 'reserved', reserved: 'available' }
-    setTableList((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, status: flow[t.status] } : t))
-    )
-  }
+export default function Tables() {
+  const { tables, updateTableStatus } = useApp()
 
   const counts = {
-    available: tableList.filter((t) => t.status === 'available').length,
-    occupied: tableList.filter((t) => t.status === 'occupied').length,
-    reserved: tableList.filter((t) => t.status === 'reserved').length,
+    available: tables.filter((t) => t.status === 'available').length,
+    occupied: tables.filter((t) => t.status === 'occupied').length,
+    reserved: tables.filter((t) => t.status === 'reserved').length,
   }
 
   return (
@@ -42,12 +36,12 @@ export default function Tables() {
 
       {/* Table Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {tableList.map((table) => {
+        {tables.map((table) => {
           const cfg = statusConfig[table.status]
           return (
             <button
               key={table.id}
-              onClick={() => cycleStatus(table.id)}
+              onClick={() => updateTableStatus(table.id, statusFlow[table.status])}
               className={`p-5 rounded-xl border-2 text-center transition-all hover:shadow-md ${cfg.bg}`}
             >
               <p className="text-2xl font-bold text-gray-800">{table.name}</p>
